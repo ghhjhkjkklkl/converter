@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+    <script defer async type="module" src="./js/index.js"></script>
+    <script defer async type="module" src="./js/events.js"></script>
+    <script defer async type="module" src="./js/single.js"></script>
+  </head>
+  <body>
+    <section class="header">
+      <div class="container">
+        <ul class="header__list">
+          <li class="header__item isActive" data-tab="1">Convert</li>
+          <li class="header__item">|</li>
+          <li class="header__item" data-tab="2">Single</li>
+        </ul>
+      </div>
+    </section>
+    <section class="contents isActive" data-content="1">
+      <div class="container">
+        <form action="#" class="convert-form">
+          <div class="convert-form__wrapper">
+            <div class="convert-form__group">
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" name="amount" />
+            </div>
+
+            <div class="convert-form__group">
+              <label for="from">From</label>
+              <select name="from" id="from" required>
+                <option value="" disabled selected hidden>
+                  Choose currency
+                </option>
+              </select>
+            </div>
+
+            <div class="switch-currencies"><=></div>
+            <div class="convert-form__group">
+              <label for="to">To</label>
+              <select name="to" id="to" required>
+                <option value="" disabled selected hidden>
+                  Choose currency
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="btn">Convert</button>
+        </form>
+        <div class="results">
+          <div class="result-item result-item--from"></div>
+          <div class="result-item result-item--to"></div>
+          <p class="exchange-rates"></p>
+          <p class="update-time"></p>
+        </div>
+      </div>
+    </section>
+    <section class="contents" data-content="2">
+      <div class="container">
+        <div class="single__currency-wrapper">
+          <div class="single__currency"></div>
+          <select id="singleSelect" required>
+            <option value="" disabled selected hidden>Choose currency</option>
+          </select>
+        </div>
+        <div class="single__currency-list"></div>
+      </div>
+    </section>
+  </body>
+</html>
