@@ -31,7 +31,7 @@
 
             <div class="convert-form__group">
               <label for="from">From</label>
-              <select name="from" id="from" required>
+              <select class="select-pair" name="from" id="from" required>
                 <option value="" disabled selected hidden>
                   Choose currency
                 </option>
@@ -41,15 +41,14 @@
             <div class="switch-currencies"><=></div>
             <div class="convert-form__group">
               <label for="to">To</label>
-              <select name="to" id="to" required>
+              <select class="select-pair" name="to" id="to" required>
                 <option value="" disabled selected hidden>
                   Choose currency
                 </option>
               </select>
             </div>
           </div>
-
-          <button type="button" class="btn">Convert</button>
+          <button class="btn">Convert</button>
         </form>
         <div class="results">
           <div class="result-item result-item--from"></div>
@@ -63,7 +62,7 @@
       <div class="container">
         <div class="single__currency-wrapper">
           <div class="single__currency"></div>
-          <select id="singleSelect" required>
+          <select id="singleSelect" name="singleSelect" required>
             <option value="" disabled selected hidden>Choose currency</option>
           </select>
         </div>

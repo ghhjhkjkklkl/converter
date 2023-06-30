@@ -101,6 +101,9 @@ label {
 .convert-form__wrapper {
   display: flex;
 }
+.single__currency-wrapper {
+  position: relative;
+}
 
 .switch-currencies {
   display: flex;
@@ -109,11 +112,14 @@ label {
 .single__group {
   display: flex;
   justify-content: space-between;
-  border: 2px solid pink;
+  border: 2px solid #ffc0cb;
 }
 
 #singleSelect {
   display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #singleSelect.active {

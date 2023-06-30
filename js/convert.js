@@ -22,6 +22,7 @@ export function onInputHandler({ target: { name, value } }) {
 
 export function onChangeHandler({ target: { name, value } }) {
   state.pair[name] = value;
+  console.log(state.pair);
 }
 export function onSwitchHandler() {
   const {
@@ -79,14 +80,22 @@ export function onChangeTabsHandler(e) {
     for (let btn of tabsBtn) {
       btn.classList.remove("isActive");
     }
-    for (let textContent of contents) {
-      textContent.classList.remove("isActive");
+    for (let tabContent of contents) {
+      tabContent.classList.remove("isActive");
     }
     const tabId = e.target.dataset.tab;
+    localStorage.setItem("activeTab", tabId);
     const tabContent = document.querySelector(`[data-content="${tabId}"]`);
     tabContent.classList.add("isActive");
   }
 }
+
+for (let tabContent of contents) {
+  tabContent.classList.remove("isActive");
+}
+const tabIdFromLS = localStorage.getItem("activeTab") || "1";
+const tabContent = document.querySelector(`[data-content="${tabIdFromLS}"]`);
+tabContent.classList.add("isActive");
 
 function renderResult({
   base_code: baseCode,

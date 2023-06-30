@@ -43,6 +43,8 @@ function renderLatest() {
 
   singleCurrency.innerHTML = createLatestTemplate(baseCode, "1.00", "Change");
 
+  singleCurrencyList.innerHTML = "";
+
   Object.entries(rates).forEach(([code, rate]) => {
     if (baseCurrencies.includes(code) && code !== baseCode) {
       renderLatestItem(code, rate.toFixed(2));
@@ -53,5 +55,19 @@ function renderLatest() {
 export function onChangeLatestItem({ target }) {
   if (target.classList.contains("btn")) {
     singleSelect.classList.add("active");
+  }
+}
+
+export function onChangeSingleSelect({ target: { value } }) {
+  singleSelect.classList.remove("active");
+
+  state.currencyRate.startCode = value;
+
+  fetchLatest();
+}
+
+export function onDeleteLatestItem({ target }) {
+  if (target.classList.contains("btn")) {
+    target.closest(".single__group").remove();
   }
 }

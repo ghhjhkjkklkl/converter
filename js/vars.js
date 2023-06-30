@@ -6,6 +6,7 @@ export default {
   contents: document.querySelectorAll(".contents"),
   singleTab: document.querySelector(".single"),
   selects: document.querySelectorAll("select"),
+  selectsPair: document.querySelectorAll(".select-pair"),
   selectFrom: document.querySelector("#from"),
   selectTo: document.querySelector("#to"),
   inputAmount: document.querySelector("#amount"),
