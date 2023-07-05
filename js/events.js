@@ -1,6 +1,5 @@
 import vars from "./vars.js";
 import {
-  onChangeTabsHandler,
   onInputHandler,
   onChangeHandler,
   onSubmitHandler,
@@ -11,7 +10,11 @@ import {
   onChangeLatestItem,
   onChangeSingleSelect,
   onDeleteLatestItem,
+  onClickSingleBtnAdd,
+  onChangeSingleSelectAdd,
 } from "./single.js";
+
+import { onChangeTabsHandler } from "./tabs.js";
 
 const {
   tabs,
@@ -22,6 +25,8 @@ const {
   singleCurrency,
   singleSelect,
   singleCurrencyList,
+  singleSelectAdd,
+  singleBtnAdd,
 } = vars;
 
 tabs.addEventListener("click", onChangeTabsHandler);
@@ -38,3 +43,5 @@ switchCurrenciesBtn.addEventListener("click", onSwitchHandler);
 singleCurrency.addEventListener("click", onChangeLatestItem);
 singleSelect.addEventListener("change", onChangeSingleSelect);
 singleCurrencyList.addEventListener("click", onDeleteLatestItem);
+singleBtnAdd.addEventListener("click", onClickSingleBtnAdd);
+singleSelectAdd.addEventListener("change", onChangeSingleSelectAdd);

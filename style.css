@@ -10,7 +10,7 @@ body {
   line-height: 1.4;
   letter-spacing: 0.1px;
   color: white;
-  background: black;
+  background: rgb(15, 15, 15);
 }
 
 h1,
@@ -54,6 +54,9 @@ select {
   border-radius: 5px;
   padding: 10px;
   outline: none;
+}
+input {
+  width: 100px;
 }
 label {
   display: block;
@@ -100,6 +103,7 @@ label {
 }
 .convert-form__wrapper {
   display: flex;
+  gap: 20px;
 }
 .single__currency-wrapper {
   position: relative;
@@ -107,6 +111,53 @@ label {
 
 .switch-currencies {
   display: flex;
+  align-items: flex-end;
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.convert-form__btn {
+  font-size: 20px;
+  margin-top: 20px;
+  float: right;
+}
+
+.result-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.result-item {
+  display: block;
+  padding: 15px;
+  margin: 50px 0 50px 0;
+
+  border-radius: 5px;
+  background: black;
+}
+
+/* .result-item__wrapper {
+  
+} */
+
+.result-item__group {
+  display: flex;
+  gap: 20px;
+}
+
+.result-item__circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: blue;
+}
+
+.result-item__code {
+  font-weight: 700;
+}
+
+.result-item__amount {
+  font-weight: 700;
 }
 
 .single__group {
@@ -123,5 +174,21 @@ label {
 }
 
 #singleSelect.active {
+  display: block;
+}
+
+.single__select-wrapper {
+  position: relative;
+  float: right;
+}
+
+#singleSelectAdd {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#singleSelectAdd.active {
   display: block;
 }

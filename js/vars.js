@@ -1,6 +1,7 @@
 export default {
   success: "success",
   error: "error",
+  baseCurrenciesFromLS: JSON.parse(localStorage.getItem("baseCurrencies")),
   tabs: document.querySelector(".header__list"),
   tabsBtn: document.querySelectorAll(".header__item"),
   contents: document.querySelectorAll(".contents"),
@@ -19,4 +20,6 @@ export default {
   singleCurrency: document.querySelector(".single__currency"),
   singleCurrencyList: document.querySelector(".single__currency-list"),
   singleSelect: document.querySelector("#singleSelect"),
+  singleSelectAdd: document.querySelector("#singleSelectAdd"),
+  singleBtnAdd: document.querySelector(".btn-add"),
 };

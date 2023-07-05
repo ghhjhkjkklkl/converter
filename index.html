@@ -48,11 +48,14 @@
               </select>
             </div>
           </div>
-          <button class="btn">Convert</button>
+          <button class="btn convert-form__btn">Convert</button>
         </form>
         <div class="results">
-          <div class="result-item result-item--from"></div>
-          <div class="result-item result-item--to"></div>
+          <div class="result-wrapper">
+            <div class="result-item result-item--from"></div>
+            <div class="result-item result-item--to"></div>
+          </div>
+
           <p class="exchange-rates"></p>
           <p class="update-time"></p>
         </div>
@@ -67,6 +70,12 @@
           </select>
         </div>
         <div class="single__currency-list"></div>
+        <div class="single__select-wrapper">
+          <button class="btn btn-add">Add currency</button>
+          <select id="singleSelectAdd" name="singleSelectAdd" required>
+            <option value="" disabled selected hidden>Choose currency</option>
+          </select>
+        </div>
       </div>
     </section>
   </body>

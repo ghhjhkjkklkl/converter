@@ -2,8 +2,15 @@ import state from "./state.js";
 import vars from "./vars.js";
 import { createLatestTemplate } from "./createTemplate.js";
 
-const { success, error, singleCurrency, singleCurrencyList, singleSelect } =
-  vars;
+const {
+  success,
+  error,
+  baseCurrenciesFromLS,
+  singleCurrency,
+  singleCurrencyList,
+  singleSelect,
+  singleSelectAdd,
+} = vars;
 
 async function fetchLatest() {
   const {
@@ -17,7 +24,11 @@ async function fetchLatest() {
     if (data.result === success) {
       state.currencyRate = { ...state.currencyRate, ...data };
       console.log(state.currencyRate);
-      renderLatest();
+      if (baseCurrenciesFromLS) {
+        renderLatest(baseCurrenciesFromLS);
+      } else {
+        renderLatest();
+      }
     } else if (data.result === error) {
       console.log(error);
     }
@@ -35,18 +46,20 @@ function renderLatestItem(code, rate) {
   );
 }
 
-function renderLatest() {
+function renderLatest(currencies) {
   const {
     baseCurrencies,
     currencyRate: { base_code: baseCode, conversion_rates: rates },
   } = state;
+
+  currencies = currencies || baseCurrencies;
 
   singleCurrency.innerHTML = createLatestTemplate(baseCode, "1.00", "Change");
 
   singleCurrencyList.innerHTML = "";
 
   Object.entries(rates).forEach(([code, rate]) => {
-    if (baseCurrencies.includes(code) && code !== baseCode) {
+    if (currencies.includes(code) && code !== baseCode) {
       renderLatestItem(code, rate.toFixed(2));
     }
   });
@@ -68,6 +81,40 @@ export function onChangeSingleSelect({ target: { value } }) {
 
 export function onDeleteLatestItem({ target }) {
   if (target.classList.contains("btn")) {
-    target.closest(".single__group").remove();
+    const latestItem = target.closest(".single__group");
+    latestItem.remove();
+    const itemCode = latestItem.querySelector(".single__group-code").innerText;
+    state.baseCurrencies = state.baseCurrencies.filter(
+      (code) => code !== itemCode
+    );
+    updateCurrenciesInLS();
   }
+}
+
+export function onClickSingleBtnAdd() {
+  singleSelectAdd.classList.add("active");
+}
+
+export function onChangeSingleSelectAdd({ target: { value } }) {
+  const {
+    currencyRate: { conversion_rates: rates },
+  } = state;
+  let newRate = 1;
+
+  singleSelectAdd.classList.remove("active");
+
+  Object.entries(rates).forEach(([code, rate]) => {
+    if (code === value) {
+      newRate = rate.toFixed(2);
+    }
+  });
+
+  state.baseCurrencies.push(value);
+  renderLatestItem(value, newRate, "Delete");
+
+  updateCurrenciesInLS();
+}
+
+function updateCurrenciesInLS() {
+  localStorage.setItem("baseCurrencies", JSON.stringify(state.baseCurrencies));
 }

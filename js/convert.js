@@ -6,8 +6,6 @@ import { createCardTemplate } from "./createTemplate.js";
 const {
   success,
   error,
-  tabsBtn,
-  contents,
   resultFrom,
   resultTo,
   exchangeRates,
@@ -44,7 +42,6 @@ export function onSwitchHandler() {
 
 export async function onSubmitHandler(e) {
   e.preventDefault();
-  console.log("x");
   const {
     url,
     amount,
@@ -74,28 +71,6 @@ export async function onSubmitHandler(e) {
     console.log(error);
   }
 }
-
-export function onChangeTabsHandler(e) {
-  if (e.target.classList.contains("header__item")) {
-    for (let btn of tabsBtn) {
-      btn.classList.remove("isActive");
-    }
-    for (let tabContent of contents) {
-      tabContent.classList.remove("isActive");
-    }
-    const tabId = e.target.dataset.tab;
-    localStorage.setItem("activeTab", tabId);
-    const tabContent = document.querySelector(`[data-content="${tabId}"]`);
-    tabContent.classList.add("isActive");
-  }
-}
-
-for (let tabContent of contents) {
-  tabContent.classList.remove("isActive");
-}
-const tabIdFromLS = localStorage.getItem("activeTab") || "1";
-const tabContent = document.querySelector(`[data-content="${tabIdFromLS}"]`);
-tabContent.classList.add("isActive");
 
 function renderResult({
   base_code: baseCode,
