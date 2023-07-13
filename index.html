@@ -15,7 +15,7 @@
       <div class="container">
         <ul class="header__list">
           <li class="header__item isActive" data-tab="1">Convert</li>
-          <li class="header__item">|</li>
+          <!-- <li class="header__item">|</li> -->
           <li class="header__item" data-tab="2">Single</li>
         </ul>
       </div>
@@ -50,19 +50,25 @@
           </div>
           <button class="btn convert-form__btn">Convert</button>
         </form>
+
+        <div class="error error-convert"></div>
+
         <div class="results">
           <div class="result-wrapper">
             <div class="result-item result-item--from"></div>
+            <span class="result-item--total"></span>
             <div class="result-item result-item--to"></div>
           </div>
-
-          <p class="exchange-rates"></p>
-          <p class="update-time"></p>
+          <div class="results-group">
+            <p class="exchange-rates"></p>
+            <p class="update-time"></p>
+          </div>
         </div>
       </div>
     </section>
     <section class="contents" data-content="2">
       <div class="container">
+        <div class="error error-single"></div>
         <div class="single__currency-wrapper">
           <div class="single__currency"></div>
           <select id="singleSelect" name="singleSelect" required>

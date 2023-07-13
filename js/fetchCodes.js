@@ -1,6 +1,6 @@
 import state from "./state.js";
 import vars from "./vars.js";
-const { success, error } = vars;
+const { success, error, errorMessage } = vars;
 
 export async function fetchCodes() {
   try {
@@ -12,6 +12,6 @@ export async function fetchCodes() {
       console.log(error);
     }
   } catch (err) {
-    console.log(err);
+    errorMessage.innerHTML = "<p>Something went wrong...</p>";
   }
 }

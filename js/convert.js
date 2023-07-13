@@ -6,7 +6,9 @@ import { createCardTemplate } from "./createTemplate.js";
 const {
   success,
   error,
+  errorMessageConvert,
   resultFrom,
+  resultTotal,
   resultTo,
   exchangeRates,
   lastUpdateDate,
@@ -65,10 +67,10 @@ export async function onSubmitHandler(e) {
     if (data.result === success) {
       renderResult(data);
     } else if (data.result === error) {
-      alert("Something went wrong...");
+      errorMessageConvert.innerHTML = "Something went wrong...";
     }
   } catch (error) {
-    console.log(error);
+    errorMessageConvert.innerHTML = "Something went wrong...";
   }
 }
 
@@ -83,18 +85,21 @@ function renderResult({
     code: baseCode,
     amount: state.amount,
     name: getFullName(state.codes, baseCode),
+    color: "pink",
   };
 
   const to = {
     code: targetCode,
     amount: result,
     name: getFullName(state.codes, targetCode),
+    color: "lightgreen",
   };
 
   const baseValue = formatCurrency(baseCode, 1);
   const targetValue = formatCurrency(targetCode, rate);
 
   resultFrom.innerHTML = createCardTemplate(from);
+  resultTotal.innerHTML = "=";
   resultTo.innerHTML = createCardTemplate(to);
   exchangeRates.innerHTML = `${baseValue} = ${targetValue}`;
   lastUpdateDate.innerHTML = `Last update ${formatDate(updateTime)}`;

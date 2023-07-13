@@ -5,6 +5,7 @@ import { createLatestTemplate } from "./createTemplate.js";
 const {
   success,
   error,
+  errorMessageSingle,
   baseCurrenciesFromLS,
   singleCurrency,
   singleCurrencyList,
@@ -20,7 +21,6 @@ async function fetchLatest() {
   try {
     const response = await fetch(`${url}/latest/${startCode}`);
     const data = await response.json();
-
     if (data.result === success) {
       state.currencyRate = { ...state.currencyRate, ...data };
       console.log(state.currencyRate);
@@ -30,10 +30,10 @@ async function fetchLatest() {
         renderLatest();
       }
     } else if (data.result === error) {
-      console.log(error);
+      errorMessageSingle.innerHTML = "<p>Something went wrong...</p>";
     }
   } catch (error) {
-    console.log(error);
+    errorMessageSingle.innerHTML = "<p>Something went wrong...</p>";
   }
 }
 
@@ -42,7 +42,14 @@ fetchLatest();
 function renderLatestItem(code, rate) {
   singleCurrencyList.insertAdjacentHTML(
     "afterbegin",
-    createLatestTemplate(code, rate, "Delete")
+    createLatestTemplate(
+      code,
+      rate,
+      "Remove",
+      "transparent",
+      "2px solid pink",
+      "10px"
+    )
   );
 }
 
@@ -54,12 +61,22 @@ function renderLatest(currencies) {
 
   currencies = currencies || baseCurrencies;
 
-  singleCurrency.innerHTML = createLatestTemplate(baseCode, "1.00", "Change");
+  const code = localStorage.getItem("startCode") || baseCode;
+
+  singleCurrency.innerHTML = createLatestTemplate(
+    code,
+    "1.00",
+    "Change",
+    "skyblue",
+    "none",
+    "20px"
+  );
 
   singleCurrencyList.innerHTML = "";
 
   Object.entries(rates).forEach(([code, rate]) => {
     if (currencies.includes(code) && code !== baseCode) {
+      console.log(currencies);
       renderLatestItem(code, rate.toFixed(2));
     }
   });
@@ -77,6 +94,8 @@ export function onChangeSingleSelect({ target: { value } }) {
   state.currencyRate.startCode = value;
 
   fetchLatest();
+  updateCurrenciesInLS();
+  updateStartCodeInLS();
 }
 
 export function onDeleteLatestItem({ target }) {
@@ -117,4 +136,8 @@ export function onChangeSingleSelectAdd({ target: { value } }) {
 
 function updateCurrenciesInLS() {
   localStorage.setItem("baseCurrencies", JSON.stringify(state.baseCurrencies));
+}
+
+function updateStartCodeInLS() {
+  localStorage.setItem("startCode", state.currencyRate.startCode);
 }
