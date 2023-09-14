@@ -12,6 +12,7 @@ import {
   onDeleteLatestItem,
   onClickSingleBtnAdd,
   onChangeSingleSelectAdd,
+  loadFromLS,
 } from "./single.js";
 
 import { onChangeTabsHandler } from "./tabs.js";
@@ -45,3 +46,7 @@ singleSelect.addEventListener("change", onChangeSingleSelect);
 singleCurrencyList.addEventListener("click", onDeleteLatestItem);
 singleBtnAdd.addEventListener("click", onClickSingleBtnAdd);
 singleSelectAdd.addEventListener("change", onChangeSingleSelectAdd);
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadFromLS();
+});

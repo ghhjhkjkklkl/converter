@@ -1,7 +1,6 @@
 export default {
   success: "success",
   error: "error",
-  baseCurrenciesFromLS: JSON.parse(localStorage.getItem("baseCurrencies")),
   tabs: document.querySelector(".header__list"),
   tabsBtn: document.querySelectorAll(".header__item"),
   contents: document.querySelectorAll(".contents"),

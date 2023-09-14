@@ -6,7 +6,6 @@ const {
   success,
   error,
   errorMessageSingle,
-  baseCurrenciesFromLS,
   singleCurrency,
   singleCurrencyList,
   singleSelect,
@@ -23,13 +22,8 @@ async function fetchLatest() {
     const data = await response.json();
     if (data.result === success) {
       state.currencyRate = { ...state.currencyRate, ...data };
-      console.log(state.currencyRate);
-      if (baseCurrenciesFromLS) {
-        renderLatest(baseCurrenciesFromLS);
-      } else {
-        renderLatest();
-      }
-    } else if (data.result === error) {
+      renderLatest();
+    } else {
       errorMessageSingle.innerHTML = "<p>Something went wrong...</p>";
     }
   } catch (error) {
@@ -59,12 +53,14 @@ function renderLatest(currencies) {
     currencyRate: { base_code: baseCode, conversion_rates: rates },
   } = state;
 
+  console.log("Hello");
+
   currencies = currencies || baseCurrencies;
 
-  const code = localStorage.getItem("startCode") || baseCode;
+  /* const code = localStorage.getItem("startCode") || baseCode; */
 
   singleCurrency.innerHTML = createLatestTemplate(
-    code,
+    baseCode,
     "1.00",
     "Change",
     "skyblue",
@@ -82,39 +78,37 @@ function renderLatest(currencies) {
   });
 }
 
-export function onChangeLatestItem({ target }) {
+function onChangeLatestItem({ target }) {
   if (target.classList.contains("btn")) {
     singleSelect.classList.add("active");
   }
 }
 
-export function onChangeSingleSelect({ target: { value } }) {
+function onChangeSingleSelect({ target: { value }, target }) {
   singleSelect.classList.remove("active");
 
-  state.currencyRate.startCode = value;
+  //state.currencyRate.startCode = value;
+  state.currencyRate = { ...state.currencyRate, startCode: value };
 
   fetchLatest();
-  updateCurrenciesInLS();
-  updateStartCodeInLS();
+  target.value = "";
+  saveToLS();
 }
 
-export function onDeleteLatestItem({ target }) {
+function onDeleteLatestItem({ target }) {
   if (target.classList.contains("btn")) {
     const latestItem = target.closest(".single__group");
     latestItem.remove();
     const itemCode = latestItem.querySelector(".single__group-code").innerText;
-    state.baseCurrencies = state.baseCurrencies.filter(
-      (code) => code !== itemCode
-    );
-    updateCurrenciesInLS();
+    removeCurrencyFromLS(itemCode);
   }
 }
 
-export function onClickSingleBtnAdd() {
+function onClickSingleBtnAdd() {
   singleSelectAdd.classList.add("active");
 }
 
-export function onChangeSingleSelectAdd({ target: { value } }) {
+function onChangeSingleSelectAdd({ target: { value } }) {
   const {
     currencyRate: { conversion_rates: rates },
   } = state;
@@ -128,16 +122,43 @@ export function onChangeSingleSelectAdd({ target: { value } }) {
     }
   });
 
-  state.baseCurrencies.push(value);
   renderLatestItem(value, newRate, "Delete");
-
-  updateCurrenciesInLS();
+  state.baseCurrencies.push(value);
+  saveToLS();
 }
 
-function updateCurrenciesInLS() {
+function saveToLS() {
   localStorage.setItem("baseCurrencies", JSON.stringify(state.baseCurrencies));
-}
-
-function updateStartCodeInLS() {
   localStorage.setItem("startCode", state.currencyRate.startCode);
 }
+
+function removeCurrencyFromLS(code) {
+  const index = state.baseCurrencies.indexOf(code);
+  if (index !== -1) {
+    state.baseCurrencies.splice(index, 1);
+    saveToLS();
+  }
+}
+
+function loadFromLS() {
+  const startCode = localStorage.getItem("startCode");
+  const baseCurrenciesJSON = localStorage.getItem("baseCurrencies");
+
+  if (startCode) {
+    state.currencyRate.startCode = startCode;
+  }
+
+  if (baseCurrenciesJSON) {
+    state.baseCurrencies = JSON.parse(baseCurrenciesJSON);
+  }
+  console.log(renderLatest(state.baseCurrencies));
+}
+
+export {
+  loadFromLS,
+  onChangeSingleSelectAdd,
+  onClickSingleBtnAdd,
+  onDeleteLatestItem,
+  onChangeSingleSelect,
+  onChangeLatestItem,
+};

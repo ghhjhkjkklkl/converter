@@ -16,15 +16,15 @@ const {
   selectTo,
 } = vars;
 
-export function onInputHandler({ target: { name, value } }) {
+function onInputHandler({ target: { name, value } }) {
   state[name] = +value;
 }
 
-export function onChangeHandler({ target: { name, value } }) {
+function onChangeHandler({ target: { name, value } }) {
   state.pair[name] = value;
   console.log(state.pair);
 }
-export function onSwitchHandler() {
+function onSwitchHandler() {
   const {
     pair: { from, to },
   } = state;
@@ -42,15 +42,13 @@ export function onSwitchHandler() {
   selectTo.value = from;
 }
 
-export async function onSubmitHandler(e) {
+async function onSubmitHandler(e) {
   e.preventDefault();
   const {
     url,
     amount,
     pair: { from, to },
   } = state;
-
-  console.log(state);
 
   if (!amount || !from || !to) {
     alert("Enter all data");
@@ -104,3 +102,5 @@ function renderResult({
   exchangeRates.innerHTML = `${baseValue} = ${targetValue}`;
   lastUpdateDate.innerHTML = `Last update ${formatDate(updateTime)}`;
 }
+
+export { onSubmitHandler, onSwitchHandler, onChangeHandler, onInputHandler };
